@@ -1,0 +1,30 @@
+This is a Haskell FFI interface to epoll, a Linux specific I/O
+notification facility. For usage examples please have a look into the 
+examples directory (please compile with -threaded option). 
+
+This library has been developed and tested with GHC 6.10.4 and 
+Linux 2.6.28-15 (x86).
+
+Changelog
+---------
+
+epoll-0.2.1
+
+Changed call to c_epoll_create to pass in 1 instead of 0. Thanks to Aycan
+Irican.
+
+epoll-0.2
+
+Added EventLoop and Buffer layer which abstract from the low level bindings
+contained in Base.
+
+
+epoll-0.1.1
+
+Changed category
+
+
+epoll-0.1
+
+Initial version. Contains the basic epoll bindings.
+

@@ -1,0 +1,2 @@
+- Add BufElem instance for ByteString
+- More examples, more testing
