@@ -151,14 +151,14 @@ closeOBuffer rt (OBuffer b) = do
 
 -- | Exception safe wrapper which creates an IBuffer, passes it to the provided
 -- function and closes it afterwards.
-withIBuffer :: BufElem a => Runtime -> Fd -> (IBuffer a -> IO ()) -> IO ()
+withIBuffer :: BufElem a => Runtime -> Fd -> (IBuffer a -> IO b) -> IO b
 withIBuffer r fd = bracket (createIBuffer r fd) (closeIBuffer r)
 
 -- | Exception safe wrapper which creates an OBuffer, passes it to the provided
 -- function and flushes and closes it afterwards.
-withOBuffer :: BufElem a => Runtime -> Fd -> (OBuffer a -> IO ()) -> IO ()
+withOBuffer :: BufElem a => Runtime -> Fd -> (OBuffer a -> IO b) -> IO b
 withOBuffer r fd f = bracket (createOBuffer r fd) (closeOBuffer r) $ \b ->
-    f b >> flushBuffer b
+    f b >>= \v -> flushBuffer b >> return v
 
 -- | Blocking read. Lazily returns all available contents from 'IBuffer'.
 readBuffer :: BufElem a => IBuffer a -> IO a
