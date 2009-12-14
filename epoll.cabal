@@ -1,5 +1,5 @@
 name:               epoll
-version:            0.2.1
+version:            0.2.2
 synopsis:           epoll bindings
 description:        Bindings to epoll, a Linux specific I/O
                     event notication facility (cf. man epoll(7)).
