@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-unused-do-bind #-}
 -- |
 -- Module      : BChan
 -- Copyright   : (c) 2009 Toralf Wittner

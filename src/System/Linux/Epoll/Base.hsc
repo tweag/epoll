@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP, ForeignFunctionInterface #-}
+{-# OPTIONS_GHC -fno-warn-unused-do-bind   #-}
 -- |
 -- Module      : System.Linux.Epoll.Base
 -- Copyright   : (c) 2009 Toralf Wittner
@@ -50,8 +51,6 @@ import Foreign.C.Types (CInt)
 import Foreign.C.Error (throwErrnoIfMinus1,
                         throwErrnoIfMinus1_,
                         throwErrnoIfMinus1Retry)
-import Foreign.Marshal.Array (peekArray, mallocArray)
-import Foreign.Marshal.Utils (with)
 import System.Posix.Types (Fd (Fd))
 import System.Posix.Signals (installHandler, sigPIPE, Handler (Ignore))
 

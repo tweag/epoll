@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-unused-do-bind #-}
 -- |
 -- Module      : System.Linux.Epoll.EventLoop
 -- Copyright   : (c) 2009 Toralf Wittner
@@ -30,7 +31,6 @@ module System.Linux.Epoll.EventLoop (
 import Util
 import Control.Monad
 import Control.Concurrent
-import Control.Concurrent.MVar
 import Data.Maybe
 import System.Posix.Types (Fd)
 import System.Linux.Epoll.Base
