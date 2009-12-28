@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -fno-warn-unused-do-bind #-}
 -- |
 -- Module      : System.Linux.Epoll.EventLoop
 -- Copyright   : (c) 2009 Toralf Wittner

@@ -1,5 +1,4 @@
 {-# LANGUAGE CPP, ForeignFunctionInterface #-}
-{-# OPTIONS_GHC -fno-warn-unused-do-bind   #-}
 -- |
 -- Module      : System.Linux.Epoll.Base
 -- Copyright   : (c) 2009 Toralf Wittner
