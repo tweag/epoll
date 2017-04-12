@@ -46,7 +46,7 @@ module System.Linux.Epoll.Base (
 
 import Util
 import Foreign
-import Foreign.C.Types (CInt)
+import Foreign.C.Types (CInt (..))
 import Foreign.C.Error (throwErrnoIfMinus1,
                         throwErrnoIfMinus1_,
                         throwErrnoIfMinus1Retry)

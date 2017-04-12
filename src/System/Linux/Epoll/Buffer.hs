@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
 -- |
 -- Module      : System.Linux.Epoll.Buffer
 -- Copyright   : (c) 2009 Toralf Wittner
@@ -53,7 +53,11 @@ import BChan
 import Prelude
 import Data.Maybe
 import Control.Monad
-import Control.Exception (bracket)
+import Control.Exception
+  ( bracket
+  , catch
+  , IOException
+  )
 import System.Posix.Types (Fd)
 import System.IO (hPrint, stderr)
 import System.Posix.IO (fdRead, fdWrite)
@@ -200,7 +204,7 @@ handleRead cha dev e = do
     doRead :: BufElem a => BChan (Maybe a) -> Fd -> IO ()
     doRead ch fd = do
         (s, k) <- beRead fd defaultBlockSize `catch` \er ->
-                    logErr er >> return (beZero, 0)
+                    logErr (er :: IOException) >> return (beZero, 0)
         unless (k == 0) $
             writeBChan ch (Just s)
         when (k == defaultBlockSize) $
@@ -214,7 +218,8 @@ handleWrite cha dev e = doWrite cha (eventFd e)
         s <- peekBChan ch
         case s of
             Just s' -> do
-                k <- beWrite fd s' `catch` \er -> logErr er >> return 0
+                k <- beWrite fd s' `catch` \er ->
+                       logErr (er :: IOException) >> return 0
                 if k == beLength s'
                     then do dropBChan ch
                             doWrite ch fd
