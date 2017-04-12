@@ -1,2 +1,8 @@
 *.hi
 *.o
+
+# Stack cache
+.stack-work
+
+# Vim swap files
+.*.swp
