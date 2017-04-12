@@ -8,8 +8,8 @@
 
 module Util where
 
-import Data.Word
 import Control.Concurrent (forkIO)
+import Data.Word
 
 intToNum :: (Integral a, Num b) => a -> b
 intToNum = fromIntegral . toInteger
