@@ -18,6 +18,7 @@ module System.Linux.Epoll.Base (
     toSize,
     Duration,
     toDuration,
+    noTimeout,
     Descriptor,
     Device,
     Event (eventFd, eventType, eventRef, eventDesc),
@@ -67,7 +68,7 @@ newtype Operation = Operation { fromOp :: Int } deriving (Eq, Ord)
 newtype Size = Size { fromSize :: Word32 } deriving (Eq, Ord, Show)
 
 -- | Unsigned type used for timeout specifications.
-newtype Duration = Duration { fromDuration :: Word32 } deriving (Eq, Ord, Show)
+newtype Duration = Duration { fromDuration :: Int } deriving (Eq, Ord, Show)
 
 -- | Event descriptor. Will be returned from 'add' and must be passed to
 -- 'delete' exactly once.
@@ -226,7 +227,11 @@ toSize :: Int -> Maybe Size
 toSize i = toWord32 i >>= Just . Size
 
 toDuration :: Int -> Maybe Duration
-toDuration i = toWord32 i >>= Just . Duration
+toDuration i | i < 0 = Nothing
+             | otherwise = Just $ Duration i
+
+noTimeout :: Duration
+noTimeout = Duration (-1)
 
 -- | Bitwise OR of the list of 'EventType's.
 combineEvents :: [EventType] -> EventType
