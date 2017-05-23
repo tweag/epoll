@@ -30,6 +30,7 @@ module System.Linux.Epoll.Base (
 
     add,
     modify,
+    modifyEventTypes,
     delete,
     freeDesc,
 
@@ -168,9 +169,24 @@ add dev dat evts fd = do
     control dev addOp evts p
     return $ Descriptor p
 
--- | Modified the event types of the event descriptor.
-modify :: Device -> [EventType] -> Descriptor a -> IO ()
-modify dev evts des = control dev modifyOp evts (descrPtr des)
+-- | Modify the event types associated to the event descriptor.
+modifyEventTypes :: Device -> [EventType] -> Descriptor a -> IO ()
+modifyEventTypes dev evts des = control dev modifyOp evts (descrPtr des)
+
+
+-- | Modify the event types and data associated to the event descriptor.
+modify
+  :: Device
+  -> [EventType]
+  -> b
+  -> Descriptor a
+  -> IO (Descriptor b)
+modify dev evts dat des = do
+  (fd, _) <- deRefStablePtr (descrPtr des)
+  freeDesc des
+  p <- newStablePtr (fd, dat)
+  control dev modifyOp evts p
+  return $ Descriptor p
 
 -- | Removes the event descriptor from the epoll watch set.
 -- and frees descriptor which must not be used afterwards.

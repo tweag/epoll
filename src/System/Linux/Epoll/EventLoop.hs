@@ -109,7 +109,7 @@ reEnableCallback :: Device -> Data -> Descriptor Data -> IO ()
 reEnableCallback dev dat des =
     withMVar (cbDirty dat) $ \dirty ->
         unless dirty $
-            modify dev (map fst (cbMap dat)) des
+            modifyEventTypes dev (map fst (cbMap dat)) des
 
 -- The heart of the event loop. Runs forever, dispatching events.
 runLoop :: Device -> Garbage -> IO ()
